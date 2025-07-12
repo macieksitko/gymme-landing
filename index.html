@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="index.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Gymme</h1>
+      <h2>First do 10 pushups</h2>
+      <img
+        id="pushup-gif"
+        src="pushup-static.png"
+        alt="Pushup demonstration"
+        style="max-width: 50%; height: auto; transition: all 0.2s ease"
+      />
+      <button onclick="playGif()">Up</button>
+    </div>
+
+    <script>
+      function playGif() {
+        const gif = document.getElementById("pushup-gif");
+        gif.src = "pushup.gif";
+
+        setTimeout(() => {
+          gif.src = "pushup-static.png";
+        }, 800);
+      }
+    </script>
+  </body>
+</html>
