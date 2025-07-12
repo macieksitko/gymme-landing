@@ -20,11 +20,49 @@ body {
   width: 100vw;
 }
 
-/* Default GIF size for desktop */
+/* Default GIF size for desktop - made bigger */
 #pushup-gif {
-  max-width: 35%;
+  max-width: 50%;
   height: auto;
   transition: all 0.2s ease;
+}
+
+/* Email input styling */
+#email-input {
+  margin-bottom: 15px;
+  padding: 12px 16px;
+  width: 280px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  background-color: white;
+  transition: border-color 0.2s ease;
+}
+
+#email-input:focus {
+  outline: none;
+  border-color: #2c2c2c;
+}
+
+#email-input::placeholder {
+  color: #999;
+}
+
+/* Email section text styling */
+#email-section h3 {
+  margin: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+#email-section p {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: nowrap;
 }
 
 /* Mobile styles */
@@ -41,12 +79,9 @@ body {
     font-size: 1.2rem;
   }
 
-  #email-section {
-    width: 90% !important;
-  }
-
   #email-input {
-    width: 80% !important;
+    width: 260px;
+    font-size: 16px;
   }
 }
 
@@ -62,6 +97,11 @@ body {
 
   h2 {
     font-size: 1.1rem;
+  }
+
+  #email-input {
+    width: 220px;
+    font-size: 16px;
   }
 }
 
