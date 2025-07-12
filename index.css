@@ -20,6 +20,51 @@ body {
   width: 100vw;
 }
 
+/* Default GIF size for desktop */
+#pushup-gif {
+  max-width: 35%;
+  height: auto;
+  transition: all 0.2s ease;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  #pushup-gif {
+    max-width: 70%;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  #email-section {
+    width: 90% !important;
+  }
+
+  #email-input {
+    width: 80% !important;
+  }
+}
+
+/* Very small screens (phones) */
+@media (max-width: 480px) {
+  #pushup-gif {
+    max-width: 80%;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+}
+
 button {
   background-color: #2c2c2c;
   color: white;
@@ -30,7 +75,7 @@ button {
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 10px;
   transition: all 0.2s ease;
 }
 
