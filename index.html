@@ -81,6 +81,7 @@
         } else {
           counterText.textContent = "10/10 pushups completed!";
           // Smooth transition between button and email section
+          pushupBtn.disabled = true;
           pushupBtn.style.opacity = "0";
           emailSection.style.opacity = "1";
           emailSection.style.pointerEvents = "auto";
