@@ -4,12 +4,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Gymme App</title>
   </head>
   <body>
     <div class="main">
-      <h1>Gymme</h1>
-      <h2 id="counter-text">First do 10 pushups</h2>
+      <h1>Gymme App</h1>
+      <h2 id="counter-text">Do 10 push-ups to get started</h2>
       <img id="pushup-gif" src="pushup-static.png" alt="Pushup demonstration" />
 
       <!-- Button container with fixed height -->
@@ -57,6 +57,7 @@
 
     <script>
       let pushupCount = 0;
+      let animationTimeout = null;
 
       function playGif() {
         const gif = document.getElementById("pushup-gif");
@@ -64,6 +65,10 @@
         const pushupBtn = document.getElementById("pushup-btn");
         const emailSection = document.getElementById("email-section");
 
+        if (animationTimeout) {
+          clearTimeout(animationTimeout)
+          animationTimeout(null);
+        }
         // Increment counter
         pushupCount++;
 
@@ -82,7 +87,7 @@
         }
 
         // Switch back to static image
-        setTimeout(() => {
+        animationTimeout = setTimeout(() => {
           gif.src = "pushup-static.png";
         }, 800);
       }
