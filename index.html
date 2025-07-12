@@ -67,7 +67,7 @@
 
         if (animationTimeout) {
           clearTimeout(animationTimeout)
-          animationTimeout(null);
+          animationTimeout = null;
         }
         // Increment counter
         pushupCount++;
