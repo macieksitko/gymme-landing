@@ -9,7 +9,7 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: ["https://macieksitko.github.io", "http://localhost:3000"],
+    origin: "https://macieksitko.github.io",
     credentials: true,
   })
 );
