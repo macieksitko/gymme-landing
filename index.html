@@ -55,9 +55,46 @@
       </div>
     </div>
 
+    <!-- Modal -->
+    <div id="thanksModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-header">
+          <h2>Thanks!</h2>
+        </div>
+        <div class="modal-body">
+          <p>You joined the waitlist ;)</p>
+          <div class="stats-container">
+            <div class="stat">
+              <div class="stat-number" id="pushup-stat">10</div>
+              <div class="stat-label">Push-ups completed by you!</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" id="waitlist-stat">-</div>
+              <div class="stat-label">Total push-ups done on the waitlist</div>
+            </div>
+          </div>
+          <p class="modal-subtitle">Wait for more info soon</p>
+        </div>
+        <div class="modal-footer">
+          <button onclick="closeModal()" class="modal-btn">
+            Do more push-ups!
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script>
       let pushupCount = 0;
       let animationTimeout = null;
+
+      function getUserPushupCount() {
+        return parseInt(localStorage.getItem("gymme-pushups") || "0");
+      }
+
+      function saveUserPushupCount(count) {
+        localStorage.setItem("gymme-pushups", count.toString());
+      }
 
       function playGif() {
         const gif = document.getElementById("pushup-gif");
@@ -66,11 +103,12 @@
         const emailSection = document.getElementById("email-section");
 
         if (animationTimeout) {
-          clearTimeout(animationTimeout)
+          clearTimeout(animationTimeout);
           animationTimeout = null;
         }
         // Increment counter
         pushupCount++;
+        saveUserPushupCount(pushupCount);
 
         // Play GIF
         gif.src = "pushup.gif";
@@ -93,15 +131,83 @@
         }, 800);
       }
 
-      function submitEmail() {
+      async function submitEmail() {
         const email = document.getElementById("email-input").value;
         if (email) {
-          alert(`Thank you! ${email} has been added to our waitlist.`);
-          // Here you would typically send the email to your server
+          try {
+            await fetch("https://gymme-landing-backend.vercel.app/waitlist", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email,
+              }),
+            });
+
+            // Show modal instead of alert
+            await showThanksModal();
+          } catch (error) {
+            alert("Something went wrong. Please try again.");
+          }
         } else {
           alert("Please enter a valid email address.");
         }
       }
+
+      async function showThanksModal() {
+        // Update pushup count in modal
+        document.getElementById("pushup-stat").textContent = pushupCount;
+
+        // Fetch and display waitlist count
+        try {
+          const response = await fetch(
+            "https://gymme-landing-backend.vercel.app/total-waitlist"
+          );
+          const data = await response.json();
+
+          // Multiply by 10 to get the total pushups
+          document.getElementById("waitlist-stat").textContent =
+            data.total * 10;
+        } catch (error) {
+          document.getElementById("waitlist-stat").textContent = "Many";
+        }
+
+        // Show modal
+        document.getElementById("thanksModal").style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("thanksModal").style.display = "none";
+        localStorage.removeItem("gymme-pushups");
+        location.reload();
+      }
+
+      // Close modal when clicking outside of it
+      window.onclick = function (event) {
+        const modal = document.getElementById("thanksModal");
+        if (event.target === modal) {
+          closeModal();
+        }
+      };
+
+      // Load saved count on page load
+      window.onload = function () {
+        pushupCount = getUserPushupCount();
+        if (pushupCount > 0) {
+          const counterText = document.getElementById("counter-text");
+          if (pushupCount >= 10) {
+            counterText.textContent = "10/10 pushups completed!";
+            // Show email section if already completed
+            document.getElementById("pushup-btn").style.opacity = "0";
+            document.getElementById("email-section").style.opacity = "1";
+            document.getElementById("email-section").style.pointerEvents =
+              "auto";
+          } else {
+            counterText.textContent = `${pushupCount}/10 pushups done`;
+          }
+        }
+      };
     </script>
   </body>
 </html>
