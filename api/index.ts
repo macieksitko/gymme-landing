@@ -7,7 +7,12 @@ const app = express();
 const port = 3000;
 dotenv.config();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://macieksitko.github.io", "http://localhost:3000"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 const turso = createClient({
